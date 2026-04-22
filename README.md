@@ -10,7 +10,12 @@ developed using **Spec-Driven Development (SDD)** methodology.
 - **Delete expenses** with inline confirmation
 - **Filter by category** using tabs (Food, Transport, Entertainment,
   Bills, Other)
-- **Spending summary** with total and per-category breakdown
+- **Filter by date range** — All Time, This Month, Last Month, This Year
+- **Search by keyword** — matches title and category (case insensitive)
+- **Sort expenses** — by amount, date, or title
+- **Clear All Filters** — resets all filters in one click
+- **Spending summary** with total and per-category breakdown (updates
+  to reflect active filters)
 - **Edit expenses** inline with validation and unsaved changes warning
 - **Persistent storage** — data survives page refreshes via localStorage
 - **Fully responsive** — works on desktop and mobile
@@ -46,7 +51,7 @@ Open http://localhost:5173 in your browser.
 
     npm run test
 
-All 26 tests should pass.
+All 52 tests should pass.
 
 ## 📁 Project Structure
 
@@ -57,16 +62,20 @@ All 26 tests should pass.
     │   │   ├── ExpenseList.jsx
     │   │   ├── ExpenseItem.jsx
     │   │   ├── CategoryTabs.jsx
+    │   │   ├── FilterBar.jsx
     │   │   └── SpendingSummary.jsx
     │   ├── services/
     │   │   └── storageService.js
     │   ├── utils/
     │   │   ├── validators.js
     │   │   ├── formatters.js
+    │   │   ├── filters.js
     │   │   └── constants.js
     │   ├── tests/
     │   │   ├── validators.test.js
-    │   │   └── storageService.test.js
+    │   │   ├── storageService.test.js
+    │   │   ├── filters.test.js
+    │   │   └── FilterBar.test.jsx
     │   └── App.jsx
     │
     └── .specify/
@@ -94,6 +103,7 @@ All specification documents live in .specify/specs/:
 |---------|--------|
 | 001 — Core Expense Tracker | ✅ Complete |
 | 002 — Edit Expense | ✅ Complete |
+| 003 — Expense Filtering | ✅ Complete |
 
 ## 🧪 Test Coverage
 
@@ -101,7 +111,9 @@ All specification documents live in .specify/specs/:
 |-----------|-------|--------|
 | validators.test.js | 14 | ✅ Passing |
 | storageService.test.js | 12 | ✅ Passing |
-| **Total** | **26** | **✅ All passing** |
+| filters.test.js | 19 | ✅ Passing |
+| FilterBar.test.jsx | 8 | ✅ Passing |
+| **Total** | **52** | **✅ All passing** |
 
 ## 📐 Architecture Decisions
 
