@@ -3,6 +3,7 @@ import AddExpenseForm from './components/AddExpenseForm'
 import ExpenseList from './components/ExpenseList'
 import CategoryTabs from './components/CategoryTabs'
 import SpendingSummary from './components/SpendingSummary'
+import FilterBar from './components/FilterBar'
 import {
   getExpenses,
   addExpense,
@@ -10,11 +11,13 @@ import {
   updateExpense,
   generateId,
 } from './services/storageService'
+import { applyAllFilters } from './utils/filters'
+import { DEFAULT_FILTER_STATE } from './utils/constants'
 import './App.css'
 
 export default function App() {
   const [expenses, setExpenses] = useState([])
-  const [activeFilter, setActiveFilter] = useState('All')
+  const [filterState, setFilterState] = useState(DEFAULT_FILTER_STATE)
   const [editingId, setEditingId] = useState(null)
   const [pendingEditId, setPendingEditId] = useState(null)
 
@@ -40,7 +43,23 @@ export default function App() {
   }
 
   function handleFilterChange(category) {
-    setActiveFilter(category)
+    setFilterState(prev => ({ ...prev, activeCategory: category }))
+  }
+
+  function handleSearchChange(keyword) {
+    setFilterState(prev => ({ ...prev, searchKeyword: keyword }))
+  }
+
+  function handleDateRangeChange(dateRange) {
+    setFilterState(prev => ({ ...prev, dateRange }))
+  }
+
+  function handleSortChange(sortBy) {
+    setFilterState(prev => ({ ...prev, sortBy }))
+  }
+
+  function handleClearAll() {
+    setFilterState(DEFAULT_FILTER_STATE)
   }
 
   function handleEdit(id) {
@@ -70,9 +89,13 @@ export default function App() {
     setPendingEditId(null)
   }
 
-  const filteredExpenses = activeFilter === 'All'
-    ? expenses
-    : expenses.filter(e => e.category === activeFilter)
+  const filteredExpenses = applyAllFilters(expenses, filterState)
+
+  const hasActiveFilters =
+    filterState.searchKeyword !== DEFAULT_FILTER_STATE.searchKeyword ||
+    filterState.dateRange !== DEFAULT_FILTER_STATE.dateRange ||
+    filterState.sortBy !== DEFAULT_FILTER_STATE.sortBy ||
+    filterState.activeCategory !== DEFAULT_FILTER_STATE.activeCategory
 
   return (
     <div className="app">
@@ -83,11 +106,20 @@ export default function App() {
       <main className="app-main">
         <AddExpenseForm onAdd={handleAdd} />
         <CategoryTabs
-          activeFilter={activeFilter}
+          activeFilter={filterState.activeCategory}
           onFilterChange={handleFilterChange}
+        />
+        <FilterBar
+          filterState={filterState}
+          onSearchChange={handleSearchChange}
+          onDateRangeChange={handleDateRangeChange}
+          onSortChange={handleSortChange}
+          onClearAll={handleClearAll}
         />
         <ExpenseList
           expenses={filteredExpenses}
+          totalExpenses={expenses.length}
+          hasActiveFilters={hasActiveFilters}
           onDelete={handleDelete}
           editingId={editingId}
           pendingEditId={pendingEditId}

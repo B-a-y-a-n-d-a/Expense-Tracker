@@ -7,3 +7,10 @@ export const CATEGORIES = [
 ]
 
 export const STORAGE_KEY = 'expense-tracker-expenses'
+
+export const DEFAULT_FILTER_STATE = {
+  searchKeyword: '',
+  dateRange: 'all',
+  sortBy: 'amountDesc',
+  activeCategory: 'All',
+}
