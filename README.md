@@ -17,6 +17,10 @@ developed using **Spec-Driven Development (SDD)** methodology.
 - **Spending summary** with total and per-category breakdown (updates
   to reflect active filters)
 - **Edit expenses** inline with validation and unsaved changes warning
+- **Monthly budget** — set an overall and per-category budget, track spending
+  with colour-coded progress bars (green / yellow / red)
+- **Recurring expenses** — mark any expense as weekly, monthly or yearly;
+  auto-added silently on the correct date when the app loads
 - **Persistent storage** — data survives page refreshes via localStorage
 - **Fully responsive** — works on desktop and mobile
 
@@ -51,7 +55,7 @@ Open http://localhost:5173 in your browser.
 
     npm run test
 
-All 52 tests should pass.
+All 79 tests should pass.
 
 ## 🐳 Docker
 
@@ -116,19 +120,27 @@ Open http://localhost:8080 in your browser.
     │   │   ├── ExpenseItem.jsx
     │   │   ├── CategoryTabs.jsx
     │   │   ├── FilterBar.jsx
-    │   │   └── SpendingSummary.jsx
+    │   │   ├── SpendingSummary.jsx
+    │   │   ├── BudgetSection.jsx
+    │   │   └── RecurringSection.jsx
     │   ├── services/
     │   │   └── storageService.js
     │   ├── utils/
     │   │   ├── validators.js
     │   │   ├── formatters.js
     │   │   ├── filters.js
-    │   │   └── constants.js
+    │   │   ├── constants.js
+    │   │   ├── budgetUtils.js
+    │   │   └── recurringUtils.js
     │   ├── tests/
     │   │   ├── validators.test.js
     │   │   ├── storageService.test.js
     │   │   ├── filters.test.js
-    │   │   └── FilterBar.test.jsx
+    │   │   ├── FilterBar.test.jsx
+    │   │   ├── budgetUtils.test.js
+    │   │   ├── BudgetSection.test.jsx
+    │   │   ├── recurringUtils.test.js
+    │   │   └── RecurringSection.test.jsx
     │   └── App.jsx
     │
     └── .specify/
@@ -157,6 +169,8 @@ All specification documents live in .specify/specs/:
 | 001 — Core Expense Tracker | ✅ Complete |
 | 002 — Edit Expense | ✅ Complete |
 | 003 — Expense Filtering | ✅ Complete |
+| 004 — Monthly Budget | ✅ Complete |
+| 005 — Recurring Expenses | 🚧 In Progress |
 
 ## 🧪 Test Coverage
 
