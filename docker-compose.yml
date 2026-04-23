@@ -1,0 +1,65 @@
+# Docker Compose version
+version: '3.8'
+
+# Services are the containers we want to run
+# We have two: dev and prod
+services:
+
+  # ==========================================
+  # DEVELOPMENT SERVICE
+  # ==========================================
+  dev:
+    # Build using our Dockerfile, target the
+    # 'development' stage
+    build:
+      context: .
+      target: development
+
+    # Map port 5173 on your machine to port 5173
+    # inside the container
+    # Format: "host_port:container_port"
+    # So localhost:5173 in your browser hits the
+    # container's port 5173
+    ports:
+      - "5173:5173"
+
+    # Volumes mount your local files into the container
+    # This is what enables live reload in development
+    # Any change you make to src/ on your machine is
+    # instantly reflected inside the container
+    volumes:
+      # Mount the entire project into /app
+      - .:/app
+      # This line is critical — it prevents your local
+      # node_modules from overwriting the container's
+      # node_modules (they may be different)
+      - /app/node_modules
+
+    # Environment variables passed into the container
+    environment:
+      - NODE_ENV=development
+
+  # ==========================================
+  # PRODUCTION SERVICE
+  # ==========================================
+  prod:
+    # Build using our Dockerfile, target the
+    # 'production' stage (uses Nginx)
+    build:
+      context: .
+      target: production
+
+    # Map port 80 inside container to port 8080
+    # on your machine
+    # We use 8080 instead of 80 because port 80
+    # often requires admin rights on Windows
+    # So localhost:8080 in browser → container port 80
+    ports:
+      - "8080:80"
+
+    # No volumes in production — the files are baked
+    # into the image during the build stage
+    # This is intentional — production containers are
+    # immutable (unchangeable) by design
+    environment:
+      - NODE_ENV=production

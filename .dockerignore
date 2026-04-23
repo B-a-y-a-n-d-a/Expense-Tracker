@@ -1,0 +1,34 @@
+# Dependencies — these get installed fresh inside
+# the container via npm install
+node_modules
+
+# Build output — gets regenerated inside container
+dist
+
+# Git files — not needed inside container
+.git
+.gitignore
+
+# Spec-kit files — not needed to run the app
+.specify
+.claude
+
+# Environment files — should never go in an image
+.env
+.env.local
+.env.production
+
+# Editor files
+.vscode
+.idea
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test files — not needed in production image
+src/tests
+
+# Logs
+npm-debug.log*
+*.log
