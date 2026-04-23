@@ -487,3 +487,123 @@ body {
     min-width: unset;
   }
 }
+
+/* Budget Section */
+.budget-section {
+  background: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.budget-section h2 {
+  margin-bottom: 16px;
+  color: #2c3e50;
+}
+
+.budget-inputs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.budget-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.budget-input-group label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.budget-input-group input {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.budget-input-group input:focus {
+  border-color: #3498db;
+}
+
+.budget-section button {
+  width: 100%;
+  padding: 12px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  margin-bottom: 20px;
+}
+
+.budget-section button:hover {
+  background: #2980b9;
+}
+
+.budget-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.budget-progress-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.budget-progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 10px;
+  background: #ecf0f1;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 5px;
+  transition: width 0.3s ease;
+}
+
+.progress-bar.good {
+  background: #27ae60;
+}
+
+.progress-bar.warning {
+  background: #f39c12;
+}
+
+.progress-bar.exceeded {
+  background: #e74c3c;
+}
+
+.over-budget-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #e74c3c;
+}
+
+@media (max-width: 600px) {
+  .budget-inputs {
+    grid-template-columns: 1fr 1fr;
+  }
+}

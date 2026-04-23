@@ -1,4 +1,4 @@
-import { STORAGE_KEY } from '../utils/constants'
+import { STORAGE_KEY, BUDGET_KEY } from '../utils/constants'
 
 /**
  * Generates a simple unique id
@@ -57,6 +57,25 @@ export function deleteExpense(id) {
   const updated = expenses.filter(e => e.id !== id)
   saveExpenses(updated)
   return updated
+}
+
+export function getBudget() {
+  try {
+    const data = localStorage.getItem(BUDGET_KEY)
+    if (!data) return null
+    return JSON.parse(data)
+  } catch (error) {
+    console.error('Failed to load budget:', error)
+    return null
+  }
+}
+
+export function saveBudget(budget) {
+  try {
+    localStorage.setItem(BUDGET_KEY, JSON.stringify(budget))
+  } catch (error) {
+    console.error('Failed to save budget:', error)
+  }
 }
 
 /**

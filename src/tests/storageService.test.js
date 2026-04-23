@@ -5,7 +5,9 @@ import {
   addExpense,
   deleteExpense,
   generateId,
-  updateExpense
+  updateExpense,
+  getBudget,
+  saveBudget,
 } from '../services/storageService'
 
 // Mock localStorage for testing
@@ -155,5 +157,28 @@ describe('updateExpense', () => {
     })
     expect(Array.isArray(result)).toBe(true)
     expect(result).toHaveLength(1)
+  })
+})
+
+describe('getBudget', () => {
+  it('returns null when nothing stored', () => {
+    expect(getBudget()).toBeNull()
+  })
+
+  it('returns saved budget', () => {
+    const budget = { overall: 5000, Food: 1000, Transport: 500 }
+    localStorageMock.getItem.mockReturnValueOnce(JSON.stringify(budget))
+    expect(getBudget()).toEqual(budget)
+  })
+})
+
+describe('saveBudget', () => {
+  it('persists budget to localStorage', () => {
+    const budget = { overall: 5000, Food: 1000, Transport: 500 }
+    saveBudget(budget)
+    expect(localStorageMock.setItem).toHaveBeenCalledWith(
+      'expense-tracker-budget',
+      JSON.stringify(budget)
+    )
   })
 })

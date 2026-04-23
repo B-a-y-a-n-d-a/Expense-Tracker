@@ -4,12 +4,15 @@ import ExpenseList from './components/ExpenseList'
 import CategoryTabs from './components/CategoryTabs'
 import SpendingSummary from './components/SpendingSummary'
 import FilterBar from './components/FilterBar'
+import BudgetSection from './components/BudgetSection'
 import {
   getExpenses,
   addExpense,
   deleteExpense,
   updateExpense,
   generateId,
+  getBudget,
+  saveBudget,
 } from './services/storageService'
 import { applyAllFilters } from './utils/filters'
 import { DEFAULT_FILTER_STATE } from './utils/constants'
@@ -17,14 +20,20 @@ import './App.css'
 
 export default function App() {
   const [expenses, setExpenses] = useState([])
+  const [budget, setBudget] = useState({})
   const [filterState, setFilterState] = useState(DEFAULT_FILTER_STATE)
   const [editingId, setEditingId] = useState(null)
   const [pendingEditId, setPendingEditId] = useState(null)
 
   useEffect(() => {
-    const saved = getExpenses()
-    setExpenses(saved)
+    setExpenses(getExpenses())
+    setBudget(getBudget() ?? {})
   }, [])
+
+  function handleSaveBudget(newBudget) {
+    saveBudget(newBudget)
+    setBudget(newBudget)
+  }
 
   function handleAdd(expense) {
     const newExpense = {
@@ -105,6 +114,11 @@ export default function App() {
 
       <main className="app-main">
         <AddExpenseForm onAdd={handleAdd} />
+        <BudgetSection
+          budget={budget}
+          expenses={expenses}
+          onSave={handleSaveBudget}
+        />
         <CategoryTabs
           activeFilter={filterState.activeCategory}
           onFilterChange={handleFilterChange}
