@@ -53,9 +53,62 @@ Open http://localhost:5173 in your browser.
 
 All 52 tests should pass.
 
+## 🐳 Docker
+
+The app ships with a multi-stage Dockerfile and a Docker Compose setup for both development and production.
+
+### How the Dockerfile works
+
+The Dockerfile has three stages:
+
+| Stage | Base image | Purpose |
+|-------|-----------|---------|
+| `development` | `node:20-alpine` | Runs Vite dev server with hot reload |
+| `build` | `node:20-alpine` | Compiles the app into static files (`dist/`) |
+| `production` | `nginx:alpine` | Serves the built files — no Node.js needed |
+
+Only the files from the relevant stage end up in the final image, so the production image is tiny (~23 MB).
+
+### Prerequisites
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+
+### Development mode
+
+Starts the Vite dev server inside a container. Your local `src/` files are mounted into the container so changes trigger live reload instantly.
+
+    docker compose up dev
+
+Open http://localhost:5173 in your browser.
+
+### Production mode
+
+Builds the app and serves the optimised static files via Nginx.
+
+    docker compose up prod
+
+Open http://localhost:8080 in your browser.
+
+> Port 8080 is used instead of 80 because port 80 often requires admin rights on Windows.
+
+### Common Docker commands
+
+| Command | Description |
+|---------|-------------|
+| `docker compose up dev` | Start development container |
+| `docker compose up prod` | Start production container |
+| `docker compose up dev --build` | Rebuild image then start dev |
+| `docker compose down` | Stop and remove containers |
+| `docker ps` | List running containers |
+| `docker compose logs dev` | Stream logs from the dev container |
+
 ## 📁 Project Structure
 
     expense-tracker/
+    ├── Dockerfile
+    ├── .dockerignore
+    ├── docker-compose.yml
+    ├── nginx.conf
     ├── src/
     │   ├── components/
     │   │   ├── AddExpenseForm.jsx
