@@ -10,6 +10,8 @@ import {
   saveBudget,
   getTheme,
   saveTheme,
+  getCalendarOpen,
+  saveCalendarOpen,
 } from '../services/storageService'
 
 // Mock localStorage for testing
@@ -202,6 +204,27 @@ describe('saveTheme', () => {
     expect(localStorageMock.setItem).toHaveBeenCalledWith(
       'expense-tracker-theme',
       'dark'
+    )
+  })
+})
+
+describe('getCalendarOpen', () => {
+  it('returns true when nothing stored (default open)', () => {
+    expect(getCalendarOpen()).toBe(true)
+  })
+
+  it('returns saved value', () => {
+    localStorageMock.getItem.mockReturnValueOnce('false')
+    expect(getCalendarOpen()).toBe(false)
+  })
+})
+
+describe('saveCalendarOpen', () => {
+  it('persists value to localStorage', () => {
+    saveCalendarOpen(false)
+    expect(localStorageMock.setItem).toHaveBeenCalledWith(
+      'expense-tracker-calendar-open',
+      'false'
     )
   })
 })

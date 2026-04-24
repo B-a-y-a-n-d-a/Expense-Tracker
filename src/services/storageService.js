@@ -1,4 +1,4 @@
-import { STORAGE_KEY, BUDGET_KEY, THEME_KEY } from '../utils/constants'
+import { STORAGE_KEY, BUDGET_KEY, THEME_KEY, CALENDAR_KEY, RECURRING_KEY } from '../utils/constants'
 
 /**
  * Generates a simple unique id
@@ -84,6 +84,56 @@ export function getTheme() {
 
 export function saveTheme(theme) {
   localStorage.setItem(THEME_KEY, theme)
+}
+
+export function getCalendarOpen() {
+  const data = localStorage.getItem(CALENDAR_KEY)
+  if (data === null) return true
+  return data === 'true'
+}
+
+export function saveCalendarOpen(isOpen) {
+  localStorage.setItem(CALENDAR_KEY, String(isOpen))
+}
+
+export function getRecurringTemplates() {
+  try {
+    const data = localStorage.getItem(RECURRING_KEY)
+    if (!data) return []
+    return JSON.parse(data)
+  } catch (error) {
+    console.error('Failed to load recurring templates:', error)
+    return []
+  }
+}
+
+export function saveRecurringTemplates(templates) {
+  try {
+    localStorage.setItem(RECURRING_KEY, JSON.stringify(templates))
+  } catch (error) {
+    console.error('Failed to save recurring templates:', error)
+  }
+}
+
+export function addRecurringTemplate(template) {
+  const templates = getRecurringTemplates()
+  const updated = [...templates, template]
+  saveRecurringTemplates(updated)
+  return updated
+}
+
+export function deleteRecurringTemplate(id) {
+  const templates = getRecurringTemplates()
+  const updated = templates.filter(t => t.id !== id)
+  saveRecurringTemplates(updated)
+  return updated
+}
+
+export function updateRecurringTemplate(updatedTemplate) {
+  const templates = getRecurringTemplates()
+  const updated = templates.map(t => t.id !== updatedTemplate.id ? t : { ...t, ...updatedTemplate })
+  saveRecurringTemplates(updated)
+  return updated
 }
 
 /**

@@ -19,6 +19,8 @@ export default function ExpenseItem({
   const [editAmount, setEditAmount] = useState(expense.amount)
   const [editCategory, setEditCategory] = useState(expense.category)
   const [editDate, setEditDate] = useState(expense.date)
+  const [editIsRecurring, setEditIsRecurring] = useState(!!expense.isRecurring)
+  const [editInterval, setEditInterval] = useState(expense.interval ?? 'monthly')
   const [errors, setErrors] = useState({})
 
   function handleDeleteClick() {
@@ -39,6 +41,8 @@ export default function ExpenseItem({
     setEditAmount(expense.amount)
     setEditCategory(expense.category)
     setEditDate(expense.date)
+    setEditIsRecurring(!!expense.isRecurring)
+    setEditInterval(expense.interval ?? 'monthly')
     setErrors({})
     onEdit(expense.id)
   }
@@ -50,6 +54,8 @@ export default function ExpenseItem({
       amount: Number(editAmount),
       category: editCategory,
       date: editDate,
+      isRecurring: editIsRecurring,
+      interval: editInterval,
     }
     const validationErrors = validateExpense(updated)
     if (Object.keys(validationErrors).length > 0) {
@@ -118,6 +124,32 @@ export default function ExpenseItem({
               <span className="error">{errors.date}</span>
             )}
           </div>
+
+          <div className="recurring-checkbox-group">
+            <input
+              id={`isRecurring-${expense.id}`}
+              type="checkbox"
+              checked={editIsRecurring}
+              onChange={e => setEditIsRecurring(e.target.checked)}
+            />
+            <label htmlFor={`isRecurring-${expense.id}`}>Mark as recurring</label>
+          </div>
+
+          {editIsRecurring && (
+            <div className="form-group">
+              <label htmlFor={`interval-${expense.id}`}>Repeat</label>
+              <select
+                id={`interval-${expense.id}`}
+                className="interval-select"
+                value={editInterval}
+                onChange={e => setEditInterval(e.target.value)}
+              >
+                <option value="weekly">Weekly</option>
+                <option value="monthly">Monthly</option>
+                <option value="yearly">Yearly</option>
+              </select>
+            </div>
+          )}
 
           <div className="edit-actions">
             <button className="save-btn" onClick={handleSave}>

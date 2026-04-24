@@ -12,6 +12,10 @@ export const BUDGET_KEY = 'expense-tracker-budget'
 
 export const THEME_KEY = 'expense-tracker-theme'
 
+export const CALENDAR_KEY = 'expense-tracker-calendar-open'
+
+export const RECURRING_KEY = 'expense-tracker-recurring'
+
 export const DEFAULT_FILTER_STATE = {
   searchKeyword: '',
   dateRange: 'all',

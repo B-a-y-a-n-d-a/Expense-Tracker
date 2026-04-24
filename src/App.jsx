@@ -5,6 +5,7 @@ import CategoryTabs from './components/CategoryTabs'
 import SpendingSummary from './components/SpendingSummary'
 import FilterBar from './components/FilterBar'
 import BudgetSection from './components/BudgetSection'
+import ExpenseCalendar from './components/ExpenseCalendar'
 import {
   getExpenses,
   addExpense,
@@ -15,9 +16,16 @@ import {
   saveBudget,
   getTheme,
   saveTheme,
+  getRecurringTemplates,
+  addRecurringTemplate,
+  deleteRecurringTemplate,
+  updateRecurringTemplate,
+  saveExpenses,
+  saveRecurringTemplates,
 } from './services/storageService'
 import { applyAllFilters } from './utils/filters'
 import { DEFAULT_FILTER_STATE } from './utils/constants'
+import { createTemplateFromExpense, getDueTemplates } from './utils/recurringUtils'
 import './App.css'
 
 export default function App() {
@@ -27,13 +35,40 @@ export default function App() {
   const [editingId, setEditingId] = useState(null)
   const [pendingEditId, setPendingEditId] = useState(null)
   const [isDark, setIsDark] = useState(false)
+  const [recurringTemplates, setRecurringTemplates] = useState([])
 
   useEffect(() => {
-    setExpenses(getExpenses())
+    const loadedExpenses = getExpenses()
+    const loadedTemplates = getRecurringTemplates()
     setBudget(getBudget() ?? {})
     if (getTheme() === 'dark') {
       setIsDark(true)
       document.body.classList.add('dark')
+    }
+
+    const today = new Date().toISOString().slice(0, 10)
+    const due = getDueTemplates(loadedTemplates, today)
+    if (due.length > 0) {
+      const newExpenses = due.map(t => ({
+        id: generateId(),
+        title: t.title,
+        amount: t.amount,
+        category: t.category,
+        date: today,
+        templateId: t.id,
+        createdAt: Date.now(),
+      }))
+      const allExpenses = [...loadedExpenses, ...newExpenses]
+      saveExpenses(allExpenses)
+      const updatedTemplates = loadedTemplates.map(t =>
+        due.find(d => d.id === t.id) ? { ...t, lastAddedDate: today } : t
+      )
+      saveRecurringTemplates(updatedTemplates)
+      setExpenses(allExpenses)
+      setRecurringTemplates(updatedTemplates)
+    } else {
+      setExpenses(loadedExpenses)
+      setRecurringTemplates(loadedTemplates)
     }
   }, [])
 
@@ -49,14 +84,22 @@ export default function App() {
     setBudget(newBudget)
   }
 
-  function handleAdd(expense) {
-    const newExpense = {
-      ...expense,
-      id: generateId(),
-      createdAt: Date.now(),
+  function handleAdd(rawExpense) {
+    const { isRecurring, interval, ...fields } = rawExpense
+    const id = generateId()
+    const expense = { ...fields, id, createdAt: Date.now() }
+    if (isRecurring) {
+      const templateId = generateId()
+      const template = { ...createTemplateFromExpense({ ...rawExpense }), id: templateId }
+      setRecurringTemplates(addRecurringTemplate(template))
+      setExpenses(addExpense({ ...expense, templateId }))
+    } else {
+      setExpenses(addExpense(expense))
     }
-    const updated = addExpense(newExpense)
-    setExpenses(updated)
+  }
+
+  function handleDeleteRecurring(id) {
+    setRecurringTemplates(deleteRecurringTemplate(id))
   }
 
   function handleDelete(id) {
@@ -96,6 +139,15 @@ export default function App() {
   function handleUpdate(updatedExpense) {
     const updated = updateExpense(updatedExpense)
     setExpenses(updated)
+    if (updatedExpense.templateId) {
+      const updatedTemplates = updateRecurringTemplate({
+        id: updatedExpense.templateId,
+        title: updatedExpense.title,
+        amount: updatedExpense.amount,
+        category: updatedExpense.category,
+      })
+      setRecurringTemplates(updatedTemplates)
+    }
     setEditingId(null)
   }
 
@@ -151,6 +203,7 @@ export default function App() {
           onSortChange={handleSortChange}
           onClearAll={handleClearAll}
         />
+        <ExpenseCalendar expenses={filteredExpenses} />
         <ExpenseList
           expenses={filteredExpenses}
           totalExpenses={expenses.length}
