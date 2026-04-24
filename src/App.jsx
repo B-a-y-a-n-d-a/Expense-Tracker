@@ -13,6 +13,8 @@ import {
   generateId,
   getBudget,
   saveBudget,
+  getTheme,
+  saveTheme,
 } from './services/storageService'
 import { applyAllFilters } from './utils/filters'
 import { DEFAULT_FILTER_STATE } from './utils/constants'
@@ -24,11 +26,23 @@ export default function App() {
   const [filterState, setFilterState] = useState(DEFAULT_FILTER_STATE)
   const [editingId, setEditingId] = useState(null)
   const [pendingEditId, setPendingEditId] = useState(null)
+  const [isDark, setIsDark] = useState(false)
 
   useEffect(() => {
     setExpenses(getExpenses())
     setBudget(getBudget() ?? {})
+    if (getTheme() === 'dark') {
+      setIsDark(true)
+      document.body.classList.add('dark')
+    }
   }, [])
+
+  function handleThemeToggle() {
+    const next = !isDark
+    setIsDark(next)
+    document.body.classList.toggle('dark', next)
+    saveTheme(next ? 'dark' : 'light')
+  }
 
   function handleSaveBudget(newBudget) {
     saveBudget(newBudget)
@@ -110,6 +124,13 @@ export default function App() {
     <div className="app">
       <header className="app-header">
         <h1>💸 Expense Tracker</h1>
+        <button
+          className="theme-toggle"
+          onClick={handleThemeToggle}
+          aria-label="Toggle dark mode"
+        >
+          {isDark ? '☀️' : '🌙'}
+        </button>
       </header>
 
       <main className="app-main">

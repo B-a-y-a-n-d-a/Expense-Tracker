@@ -8,6 +8,8 @@ import {
   updateExpense,
   getBudget,
   saveBudget,
+  getTheme,
+  saveTheme,
 } from '../services/storageService'
 
 // Mock localStorage for testing
@@ -179,6 +181,27 @@ describe('saveBudget', () => {
     expect(localStorageMock.setItem).toHaveBeenCalledWith(
       'expense-tracker-budget',
       JSON.stringify(budget)
+    )
+  })
+})
+
+describe('getTheme', () => {
+  it('returns null when nothing stored', () => {
+    expect(getTheme()).toBeNull()
+  })
+
+  it('returns saved theme value', () => {
+    localStorageMock.getItem.mockReturnValueOnce('dark')
+    expect(getTheme()).toBe('dark')
+  })
+})
+
+describe('saveTheme', () => {
+  it('persists theme to localStorage', () => {
+    saveTheme('dark')
+    expect(localStorageMock.setItem).toHaveBeenCalledWith(
+      'expense-tracker-theme',
+      'dark'
     )
   })
 })

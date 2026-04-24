@@ -1,3 +1,31 @@
+:root {
+  --bg-primary: #f5f5f5;
+  --bg-card: #ffffff;
+  --text-primary: #333333;
+  --text-secondary: #555555;
+  --text-muted: #999999;
+  --border-color: #dddddd;
+  --accent-blue: #3498db;
+  --accent-green: #27ae60;
+  --accent-red: #e74c3c;
+  --accent-yellow: #f39c12;
+  --shadow: rgba(0,0,0,0.08);
+}
+
+body.dark {
+  --bg-primary: #1a1a2e;
+  --bg-card: #16213e;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --text-muted: #707070;
+  --border-color: #2a2a4a;
+  --accent-blue: #4aa3df;
+  --accent-green: #2ecc71;
+  --accent-red: #e74c3c;
+  --accent-yellow: #f39c12;
+  --shadow: rgba(0,0,0,0.3);
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,8 +34,8 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  background: #f5f5f5;
-  color: #333;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   min-height: 100vh;
 }
 
@@ -18,13 +46,30 @@ body {
 }
 
 .app-header {
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 30px;
 }
 
 .app-header h1 {
   font-size: 2rem;
-  color: #2c3e50;
+  color: var(--text-primary);
+}
+
+.theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  line-height: 1;
+  transition: transform 0.2s;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.2);
 }
 
 .app-main {
@@ -35,15 +80,15 @@ body {
 
 /* Add Expense Form */
 .add-expense-form {
-  background: white;
+  background: var(--bg-card);
   padding: 24px;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px var(--shadow);
 }
 
 .add-expense-form h2 {
   margin-bottom: 16px;
-  color: #2c3e50;
+  color: var(--text-primary);
 }
 
 .form-group {
@@ -56,33 +101,35 @@ body {
 .form-group label {
   font-weight: 600;
   font-size: 0.9rem;
-  color: #555;
+  color: var(--text-secondary);
 }
 
 .form-group input,
 .form-group select {
   padding: 10px 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 1rem;
   outline: none;
   transition: border-color 0.2s;
+  background: var(--bg-card);
+  color: var(--text-primary);
 }
 
 .form-group input:focus,
 .form-group select:focus {
-  border-color: #3498db;
+  border-color: var(--accent-blue);
 }
 
 .error {
-  color: #e74c3c;
+  color: var(--accent-red);
   font-size: 0.85rem;
 }
 
 .add-expense-form button[type="submit"] {
   width: 100%;
   padding: 12px;
-  background: #3498db;
+  background: var(--accent-blue);
   color: white;
   border: none;
   border-radius: 8px;
@@ -105,23 +152,23 @@ body {
 
 .tab-btn {
   padding: 8px 16px;
-  border: 2px solid #ddd;
+  border: 2px solid var(--border-color);
   border-radius: 20px;
-  background: white;
-  color: #333;
+  background: var(--bg-card);
+  color: var(--text-primary);
   cursor: pointer;
   font-size: 0.9rem;
   transition: all 0.2s;
 }
 
 .tab-btn:hover {
-  border-color: #3498db;
-  color: #3498db;
+  border-color: var(--accent-blue);
+  color: var(--accent-blue);
 }
 
 .tab-btn.active {
-  background: #3498db;
-  border-color: #3498db;
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
   color: white;
   font-weight: 600;
 }
@@ -136,18 +183,18 @@ body {
 .empty-state {
   text-align: center;
   padding: 40px;
-  background: white;
+  background: var(--bg-card);
   border-radius: 12px;
-  color: #999;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  color: var(--text-muted);
+  box-shadow: 0 2px 8px var(--shadow);
 }
 
 /* Expense Item */
 .expense-item {
-  background: white;
+  background: var(--bg-card);
   padding: 16px 20px;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px var(--shadow);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -167,27 +214,27 @@ body {
 
 .expense-category {
   background: #eaf4fb;
-  color: #3498db;
+  color: var(--accent-blue);
   padding: 2px 10px;
   border-radius: 12px;
   font-size: 0.85rem;
 }
 
 .expense-date {
-  color: #999;
+  color: var(--text-muted);
   font-size: 0.85rem;
 }
 
 .expense-amount {
   font-weight: 700;
-  color: #2c3e50;
+  color: var(--text-primary);
 }
 
 .delete-btn {
   padding: 6px 14px;
-  background: white;
-  border: 2px solid #e74c3c;
-  color: #e74c3c;
+  background: var(--bg-card);
+  border: 2px solid var(--accent-red);
+  color: var(--accent-red);
   border-radius: 8px;
   cursor: pointer;
   font-size: 0.85rem;
@@ -195,7 +242,7 @@ body {
 }
 
 .delete-btn:hover {
-  background: #e74c3c;
+  background: var(--accent-red);
   color: white;
 }
 
@@ -208,7 +255,7 @@ body {
 
 .confirm-yes {
   padding: 6px 12px;
-  background: #e74c3c;
+  background: var(--accent-red);
   color: white;
   border: none;
   border-radius: 8px;
@@ -226,15 +273,15 @@ body {
 
 /* Spending Summary */
 .spending-summary {
-  background: white;
+  background: var(--bg-card);
   padding: 24px;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px var(--shadow);
 }
 
 .spending-summary h2 {
   margin-bottom: 16px;
-  color: #2c3e50;
+  color: var(--text-primary);
 }
 
 .summary-total {
@@ -250,12 +297,12 @@ body {
 .total-amount {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #2c3e50;
+  color: var(--text-primary);
 }
 
 .summary-breakdown h3 {
   font-size: 0.9rem;
-  color: #999;
+  color: var(--text-muted);
   margin-bottom: 12px;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -273,12 +320,12 @@ body {
 }
 
 .summary-category {
-  color: #555;
+  color: var(--text-secondary);
 }
 
 .summary-amount {
   font-weight: 600;
-  color: #2c3e50;
+  color: var(--text-primary);
 }
 
 /* Responsive */
@@ -299,9 +346,9 @@ body {
 /* Edit Form */
 .expense-item.editing {
   padding: 0;
-  background: white;
+  background: var(--bg-card);
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px var(--shadow);
 }
 
 .edit-form {
@@ -310,7 +357,7 @@ body {
 
 .edit-form h3 {
   margin-bottom: 16px;
-  color: #2c3e50;
+  color: var(--text-primary);
 }
 
 .edit-actions {
@@ -322,7 +369,7 @@ body {
 .save-btn {
   flex: 1;
   padding: 12px;
-  background: #27ae60;
+  background: var(--accent-green);
   color: white;
   border: none;
   border-radius: 8px;
@@ -339,9 +386,9 @@ body {
 .cancel-btn {
   flex: 1;
   padding: 12px;
-  background: white;
-  color: #666;
-  border: 2px solid #ddd;
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border: 2px solid var(--border-color);
   border-radius: 8px;
   font-size: 1rem;
   font-weight: 600;
@@ -350,16 +397,16 @@ body {
 }
 
 .cancel-btn:hover {
-  border-color: #999;
-  color: #333;
+  border-color: var(--text-muted);
+  color: var(--text-primary);
 }
 
 /* Edit Button */
 .edit-btn {
   padding: 6px 14px;
-  background: white;
-  border: 2px solid #3498db;
-  color: #3498db;
+  background: var(--bg-card);
+  border: 2px solid var(--accent-blue);
+  color: var(--accent-blue);
   border-radius: 8px;
   cursor: pointer;
   font-size: 0.85rem;
@@ -368,14 +415,14 @@ body {
 }
 
 .edit-btn:hover {
-  background: #3498db;
+  background: var(--accent-blue);
   color: white;
 }
 
 /* Unsaved Warning */
 .unsaved-warning {
   background: #fef9e7;
-  border: 1px solid #f39c12;
+  border: 1px solid var(--accent-yellow);
   border-radius: 8px;
   padding: 12px 16px;
   margin-bottom: 12px;
@@ -389,7 +436,7 @@ body {
 
 .discard-btn {
   padding: 6px 12px;
-  background: #e74c3c;
+  background: var(--accent-red);
   color: white;
   border: none;
   border-radius: 8px;
@@ -399,63 +446,66 @@ body {
 
 .keep-btn {
   padding: 6px 12px;
-  background: #27ae60;
+  background: var(--accent-green);
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-size: 0.85rem;
 }
+
 /* Filter Bar */
 .filter-bar {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
   align-items: center;
-  background: white;
+  background: var(--bg-card);
   padding: 16px 20px;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px var(--shadow);
 }
 
 .search-input {
   flex: 1;
   min-width: 200px;
   padding: 10px 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 1rem;
   outline: none;
   transition: border-color 0.2s;
+  background: var(--bg-card);
+  color: var(--text-primary);
 }
 
 .search-input:focus {
-  border-color: #3498db;
+  border-color: var(--accent-blue);
 }
 
 .filter-select {
   padding: 10px 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 1rem;
   outline: none;
-  background: white;
-  color: #333;
+  background: var(--bg-card);
+  color: var(--text-primary);
   cursor: pointer;
   transition: border-color 0.2s;
   min-width: 160px;
 }
 
 .filter-select:focus {
-  border-color: #3498db;
+  border-color: var(--accent-blue);
 }
 
 .clear-btn {
   padding: 10px 16px;
-  background: white;
-  border: 2px solid #ddd;
+  background: var(--bg-card);
+  border: 2px solid var(--border-color);
   border-radius: 8px;
-  color: #666;
+  color: var(--text-secondary);
   font-size: 0.9rem;
   cursor: pointer;
   transition: all 0.2s;
@@ -463,13 +513,13 @@ body {
 }
 
 .clear-btn:hover {
-  border-color: #e74c3c;
-  color: #e74c3c;
+  border-color: var(--accent-red);
+  color: var(--accent-red);
 }
 
 .clear-btn.active {
-  border-color: #e74c3c;
-  color: #e74c3c;
+  border-color: var(--accent-red);
+  color: var(--accent-red);
   font-weight: 600;
 }
 
@@ -490,15 +540,15 @@ body {
 
 /* Budget Section */
 .budget-section {
-  background: white;
+  background: var(--bg-card);
   padding: 24px;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px var(--shadow);
 }
 
 .budget-section h2 {
   margin-bottom: 16px;
-  color: #2c3e50;
+  color: var(--text-primary);
 }
 
 .budget-inputs {
@@ -517,26 +567,28 @@ body {
 .budget-input-group label {
   font-weight: 600;
   font-size: 0.9rem;
-  color: #555;
+  color: var(--text-secondary);
 }
 
 .budget-input-group input {
   padding: 10px 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 1rem;
   outline: none;
   transition: border-color 0.2s;
+  background: var(--bg-card);
+  color: var(--text-primary);
 }
 
 .budget-input-group input:focus {
-  border-color: #3498db;
+  border-color: var(--accent-blue);
 }
 
 .budget-section button {
   width: 100%;
   padding: 12px;
-  background: #3498db;
+  background: var(--accent-blue);
   color: white;
   border: none;
   border-radius: 8px;
@@ -567,7 +619,7 @@ body {
   display: flex;
   justify-content: space-between;
   font-size: 0.9rem;
-  color: #555;
+  color: var(--text-secondary);
 }
 
 .progress-bar-container {
@@ -585,21 +637,21 @@ body {
 }
 
 .progress-bar.good {
-  background: #27ae60;
+  background: var(--accent-green);
 }
 
 .progress-bar.warning {
-  background: #f39c12;
+  background: var(--accent-yellow);
 }
 
 .progress-bar.exceeded {
-  background: #e74c3c;
+  background: var(--accent-red);
 }
 
 .over-budget-label {
   font-size: 0.8rem;
   font-weight: 600;
-  color: #e74c3c;
+  color: var(--accent-red);
 }
 
 @media (max-width: 600px) {
@@ -610,15 +662,15 @@ body {
 
 /* Recurring Section */
 .recurring-section {
-  background: white;
+  background: var(--bg-card);
   padding: 24px;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px var(--shadow);
 }
 
 .recurring-section h2 {
   margin-bottom: 16px;
-  color: #2c3e50;
+  color: var(--text-primary);
 }
 
 .recurring-list {
@@ -647,17 +699,17 @@ body {
 .recurring-title {
   font-weight: 600;
   font-size: 1rem;
-  color: #2c3e50;
+  color: var(--text-primary);
 }
 
 .recurring-amount {
   font-weight: 700;
-  color: #2c3e50;
+  color: var(--text-primary);
 }
 
 .recurring-category {
   background: #eaf4fb;
-  color: #3498db;
+  color: var(--accent-blue);
   padding: 2px 10px;
   border-radius: 12px;
   font-size: 0.85rem;
@@ -672,7 +724,7 @@ body {
 
 .recurring-interval-badge.weekly {
   background: #eafaf1;
-  color: #27ae60;
+  color: var(--accent-green);
 }
 
 .recurring-interval-badge.monthly {
@@ -697,31 +749,31 @@ body {
   width: 16px;
   height: 16px;
   cursor: pointer;
-  accent-color: #3498db;
+  accent-color: var(--accent-blue);
 }
 
 .recurring-checkbox-group label {
   font-weight: 600;
   font-size: 0.9rem;
-  color: #555;
+  color: var(--text-secondary);
   cursor: pointer;
 }
 
 .interval-select {
   width: 100%;
   padding: 10px 12px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   font-size: 1rem;
   outline: none;
-  background: white;
-  color: #333;
+  background: var(--bg-card);
+  color: var(--text-primary);
   cursor: pointer;
   transition: border-color 0.2s;
 }
 
 .interval-select:focus {
-  border-color: #3498db;
+  border-color: var(--accent-blue);
 }
 
 @media (max-width: 600px) {

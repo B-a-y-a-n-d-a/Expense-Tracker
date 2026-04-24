@@ -1,4 +1,4 @@
-import { STORAGE_KEY, BUDGET_KEY } from '../utils/constants'
+import { STORAGE_KEY, BUDGET_KEY, THEME_KEY } from '../utils/constants'
 
 /**
  * Generates a simple unique id
@@ -76,6 +76,14 @@ export function saveBudget(budget) {
   } catch (error) {
     console.error('Failed to save budget:', error)
   }
+}
+
+export function getTheme() {
+  return localStorage.getItem(THEME_KEY)
+}
+
+export function saveTheme(theme) {
+  localStorage.setItem(THEME_KEY, theme)
 }
 
 /**
