@@ -21,6 +21,11 @@ developed using **Spec-Driven Development (SDD)** methodology.
   with colour-coded progress bars (green / yellow / red)
 - **Recurring expenses** — mark any expense as weekly, monthly or yearly;
   auto-added silently on the correct date when the app loads
+- **Dark mode** — toggle between light and dark theme; preference persists
+  across page refreshes
+- **Expense calendar** — monthly calendar view with dots on days that have
+  expenses; hover for a tooltip showing each expense; collapsible and
+  state persists across refreshes
 - **Persistent storage** — data survives page refreshes via localStorage
 - **Fully responsive** — works on desktop and mobile
 
@@ -55,7 +60,7 @@ Open http://localhost:5173 in your browser.
 
     npm run test
 
-All 79 tests should pass.
+All 107 tests should pass.
 
 ## 🐳 Docker
 
@@ -122,6 +127,7 @@ Open http://localhost:8080 in your browser.
     │   │   ├── FilterBar.jsx
     │   │   ├── SpendingSummary.jsx
     │   │   ├── BudgetSection.jsx
+    │   │   ├── ExpenseCalendar.jsx
     │   │   └── RecurringSection.jsx
     │   ├── services/
     │   │   └── storageService.js
@@ -131,6 +137,7 @@ Open http://localhost:8080 in your browser.
     │   │   ├── filters.js
     │   │   ├── constants.js
     │   │   ├── budgetUtils.js
+    │   │   ├── calendarUtils.js
     │   │   └── recurringUtils.js
     │   ├── tests/
     │   │   ├── validators.test.js
@@ -139,8 +146,8 @@ Open http://localhost:8080 in your browser.
     │   │   ├── FilterBar.test.jsx
     │   │   ├── budgetUtils.test.js
     │   │   ├── BudgetSection.test.jsx
-    │   │   ├── recurringUtils.test.js
-    │   │   └── RecurringSection.test.jsx
+    │   │   ├── calendarUtils.test.js
+    │   │   └── ExpenseCalendar.test.jsx
     │   └── App.jsx
     │
     └── .specify/
@@ -148,7 +155,12 @@ Open http://localhost:8080 in your browser.
         │   └── constitution.md
         └── specs/
             ├── 001-expense-tracker/
-            └── 002-edit-expense/
+            ├── 002-edit-expense/
+            ├── 003-expense-filtering/
+            ├── 004-monthly-budget/
+            ├── 005-recurring-expenses/
+            ├── 006-dark-mode/
+            └── 007-expense-calendar/
 
 ## 📋 Spec-Driven Development
 
@@ -170,17 +182,23 @@ All specification documents live in .specify/specs/:
 | 002 — Edit Expense | ✅ Complete |
 | 003 — Expense Filtering | ✅ Complete |
 | 004 — Monthly Budget | ✅ Complete |
-| 005 — Recurring Expenses | 🚧 In Progress |
+| 005 — Recurring Expenses | ✅ Complete |
+| 006 — Dark Mode | ✅ Complete |
+| 007 — Expense Calendar | ✅ Complete |
 
 ## 🧪 Test Coverage
 
 | Test File | Tests | Status |
 |-----------|-------|--------|
 | validators.test.js | 14 | ✅ Passing |
-| storageService.test.js | 12 | ✅ Passing |
-| filters.test.js | 19 | ✅ Passing |
+| storageService.test.js | 21 | ✅ Passing |
+| filters.test.js | 18 | ✅ Passing |
 | FilterBar.test.jsx | 8 | ✅ Passing |
-| **Total** | **52** | **✅ All passing** |
+| budgetUtils.test.js | 15 | ✅ Passing |
+| BudgetSection.test.jsx | 9 | ✅ Passing |
+| calendarUtils.test.js | 14 | ✅ Passing |
+| ExpenseCalendar.test.jsx | 8 | ✅ Passing |
+| **Total** | **107** | **✅ All passing** |
 
 ## 📐 Architecture Decisions
 
