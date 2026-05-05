@@ -6,6 +6,7 @@ import SpendingSummary from './components/SpendingSummary'
 import FilterBar from './components/FilterBar'
 import BudgetSection from './components/BudgetSection'
 import ExpenseCalendar from './components/ExpenseCalendar'
+import ExpenseStatistics from './components/ExpenseStatistics'
 import {
   getExpenses,
   addExpense,
@@ -218,6 +219,7 @@ export default function App() {
           onKeepEditing={handleKeepEditing}
         />
         <SpendingSummary expenses={filteredExpenses} />
+        <ExpenseStatistics expenses={expenses} />
       </main>
     </div>
   )

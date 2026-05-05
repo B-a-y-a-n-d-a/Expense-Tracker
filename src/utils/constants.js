@@ -16,6 +16,8 @@ export const CALENDAR_KEY = 'expense-tracker-calendar-open'
 
 export const RECURRING_KEY = 'expense-tracker-recurring'
 
+export const STATS_KEY = 'expense-tracker-stats-open'
+
 export const DEFAULT_FILTER_STATE = {
   searchKeyword: '',
   dateRange: 'all',

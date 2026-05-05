@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest'
 import {
   getCurrentMonthExpenses,
   calculateProgress,
@@ -18,6 +18,14 @@ const makeExpense = (date, category = 'Food', amount = 100) => ({
 })
 
 describe('getCurrentMonthExpenses', () => {
+  beforeEach(() => {
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date('2026-04-15T12:00:00'))
+  })
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
   it('returns only expenses from current month', () => {
     const expenses = [makeExpense(THIS_MONTH), makeExpense(LAST_MONTH)]
     const result = getCurrentMonthExpenses(expenses)
@@ -77,6 +85,14 @@ describe('calculateProgress', () => {
 })
 
 describe('calculateAllProgress', () => {
+  beforeEach(() => {
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date('2026-04-15T12:00:00'))
+  })
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
   const expenses = [
     makeExpense(THIS_MONTH, 'Food', 500),
     makeExpense(THIS_MONTH, 'Food', 300),

@@ -1,4 +1,4 @@
-import { STORAGE_KEY, BUDGET_KEY, THEME_KEY, CALENDAR_KEY, RECURRING_KEY } from '../utils/constants'
+import { STORAGE_KEY, BUDGET_KEY, THEME_KEY, CALENDAR_KEY, RECURRING_KEY, STATS_KEY } from '../utils/constants'
 
 /**
  * Generates a simple unique id
@@ -141,6 +141,16 @@ export function updateRecurringTemplate(updatedTemplate) {
  * @param {object} updatedExpense
  * @returns {Array} updated expenses
  */
+export function getStatsOpen() {
+  const data = localStorage.getItem(STATS_KEY)
+  if (data === null) return false
+  return data === 'true'
+}
+
+export function saveStatsOpen(isOpen) {
+  localStorage.setItem(STATS_KEY, String(isOpen))
+}
+
 export function updateExpense(updatedExpense) {
   const expenses = getExpenses()
   const updated = expenses.map(e => {
