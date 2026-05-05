@@ -26,6 +26,9 @@ developed using **Spec-Driven Development (SDD)** methodology.
 - **Expense calendar** — monthly calendar view with dots on days that have
   expenses; hover for a tooltip showing each expense; collapsible and
   state persists across refreshes
+- **Monthly statistics** — collapsible section showing 6 key metrics for the
+  current month: average daily spend, highest expense, most used category,
+  most expensive category, total count, and busiest day of week
 - **Persistent storage** — data survives page refreshes via localStorage
 - **Fully responsive** — works on desktop and mobile
 
@@ -60,7 +63,7 @@ Open http://localhost:5173 in your browser.
 
     npm run test
 
-All 107 tests should pass.
+All 137 tests should pass.
 
 ## 🐳 Docker
 
@@ -128,6 +131,7 @@ Open http://localhost:8080 in your browser.
     │   │   ├── SpendingSummary.jsx
     │   │   ├── BudgetSection.jsx
     │   │   ├── ExpenseCalendar.jsx
+    │   │   ├── ExpenseStatistics.jsx
     │   │   └── RecurringSection.jsx
     │   ├── services/
     │   │   └── storageService.js
@@ -138,6 +142,7 @@ Open http://localhost:8080 in your browser.
     │   │   ├── constants.js
     │   │   ├── budgetUtils.js
     │   │   ├── calendarUtils.js
+    │   │   ├── statisticsUtils.js
     │   │   └── recurringUtils.js
     │   ├── tests/
     │   │   ├── validators.test.js
@@ -147,7 +152,9 @@ Open http://localhost:8080 in your browser.
     │   │   ├── budgetUtils.test.js
     │   │   ├── BudgetSection.test.jsx
     │   │   ├── calendarUtils.test.js
-    │   │   └── ExpenseCalendar.test.jsx
+    │   │   ├── ExpenseCalendar.test.jsx
+    │   │   ├── statisticsUtils.test.js
+    │   │   └── ExpenseStatistics.test.jsx
     │   └── App.jsx
     │
     └── .specify/
@@ -160,7 +167,8 @@ Open http://localhost:8080 in your browser.
             ├── 004-monthly-budget/
             ├── 005-recurring-expenses/
             ├── 006-dark-mode/
-            └── 007-expense-calendar/
+            ├── 007-expense-calendar/
+            └── 008-expense-statistics/
 
 ## 📋 Spec-Driven Development
 
@@ -185,6 +193,7 @@ All specification documents live in .specify/specs/:
 | 005 — Recurring Expenses | ✅ Complete |
 | 006 — Dark Mode | ✅ Complete |
 | 007 — Expense Calendar | ✅ Complete |
+| 008 — Expense Statistics | ✅ Complete |
 
 ## 🧪 Test Coverage
 
@@ -198,7 +207,9 @@ All specification documents live in .specify/specs/:
 | BudgetSection.test.jsx | 9 | ✅ Passing |
 | calendarUtils.test.js | 14 | ✅ Passing |
 | ExpenseCalendar.test.jsx | 8 | ✅ Passing |
-| **Total** | **107** | **✅ All passing** |
+| statisticsUtils.test.js | 18 | ✅ Passing |
+| ExpenseStatistics.test.jsx | 9 | ✅ Passing |
+| **Total** | **137** | **✅ All passing** |
 
 ## 📐 Architecture Decisions
 
