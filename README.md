@@ -29,6 +29,10 @@ developed using **Spec-Driven Development (SDD)** methodology.
 - **Monthly statistics** — collapsible section showing 6 key metrics for the
   current month: average daily spend, highest expense, most used category,
   most expensive category, total count, and busiest day of week
+- **Expense history** — History tab inside the statistics section; pick any
+  two months from dropdowns and see a side-by-side breakdown of total spent,
+  expense count and per-category totals; colour-coded difference indicators
+  (green ↓ when spending fell, red ↑ when it rose, grey = when equal)
 - **Persistent storage** — data survives page refreshes via localStorage
 - **Fully responsive** — works on desktop and mobile
 
@@ -63,7 +67,7 @@ Open http://localhost:5173 in your browser.
 
     npm run test
 
-All 137 tests should pass.
+All 164 tests should pass.
 
 ## 🐳 Docker
 
@@ -132,6 +136,7 @@ Open http://localhost:8080 in your browser.
     │   │   ├── BudgetSection.jsx
     │   │   ├── ExpenseCalendar.jsx
     │   │   ├── ExpenseStatistics.jsx
+    │   │   ├── MonthComparison.jsx
     │   │   └── RecurringSection.jsx
     │   ├── services/
     │   │   └── storageService.js
@@ -143,6 +148,7 @@ Open http://localhost:8080 in your browser.
     │   │   ├── budgetUtils.js
     │   │   ├── calendarUtils.js
     │   │   ├── statisticsUtils.js
+    │   │   ├── historyUtils.js
     │   │   └── recurringUtils.js
     │   ├── tests/
     │   │   ├── validators.test.js
@@ -154,7 +160,9 @@ Open http://localhost:8080 in your browser.
     │   │   ├── calendarUtils.test.js
     │   │   ├── ExpenseCalendar.test.jsx
     │   │   ├── statisticsUtils.test.js
-    │   │   └── ExpenseStatistics.test.jsx
+    │   │   ├── ExpenseStatistics.test.jsx
+    │   │   ├── historyUtils.test.js
+    │   │   └── MonthComparison.test.jsx
     │   └── App.jsx
     │
     └── .specify/
@@ -168,7 +176,8 @@ Open http://localhost:8080 in your browser.
             ├── 005-recurring-expenses/
             ├── 006-dark-mode/
             ├── 007-expense-calendar/
-            └── 008-expense-statistics/
+            ├── 008-expense-statistics/
+            └── 009-expense-history/
 
 ## 📋 Spec-Driven Development
 
@@ -194,6 +203,7 @@ All specification documents live in .specify/specs/:
 | 006 — Dark Mode | ✅ Complete |
 | 007 — Expense Calendar | ✅ Complete |
 | 008 — Expense Statistics | ✅ Complete |
+| 009 — Expense History | ✅ Complete |
 
 ## 🧪 Test Coverage
 
@@ -209,7 +219,9 @@ All specification documents live in .specify/specs/:
 | ExpenseCalendar.test.jsx | 8 | ✅ Passing |
 | statisticsUtils.test.js | 18 | ✅ Passing |
 | ExpenseStatistics.test.jsx | 9 | ✅ Passing |
-| **Total** | **137** | **✅ All passing** |
+| historyUtils.test.js | 17 | ✅ Passing |
+| MonthComparison.test.jsx | 10 | ✅ Passing |
+| **Total** | **164** | **✅ All passing** |
 
 ## 📐 Architecture Decisions
 
