@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { getCurrentMonthStats } from '../utils/statisticsUtils'
 import { formatCurrency } from '../utils/formatters'
 import { getStatsOpen, saveStatsOpen } from '../services/storageService'
+import MonthComparison from './MonthComparison'
 
 function StatCard({ label, value }) {
   return (
@@ -14,6 +15,7 @@ function StatCard({ label, value }) {
 
 export default function ExpenseStatistics({ expenses }) {
   const [isOpen, setIsOpen] = useState(() => getStatsOpen())
+  const [activeTab, setActiveTab] = useState('statistics')
 
   function handleToggle() {
     const next = !isOpen
@@ -48,37 +50,54 @@ export default function ExpenseStatistics({ expenses }) {
           Hide Statistics
         </button>
       </div>
-      <div className="statistics-grid">
-        <StatCard
-          label="Average Daily Spend"
-          value={averageDailySpend === 0 ? noData : formatCurrency(averageDailySpend)}
-        />
-        <StatCard
-          label="Highest Expense"
-          value={highestExpense === null ? noData : (
-            <>
-              <span>{highestExpense.title}</span>
-              <span>{formatCurrency(highestExpense.amount)}</span>
-            </>
-          )}
-        />
-        <StatCard
-          label="Most Used Category"
-          value={mostUsedCategory ?? noData}
-        />
-        <StatCard
-          label="Most Expensive Category"
-          value={mostExpensiveCategory ?? noData}
-        />
-        <StatCard
-          label="Total Expenses"
-          value={totalExpenseCount === 0 ? noData : `${totalExpenseCount} expenses`}
-        />
-        <StatCard
-          label="Busiest Day"
-          value={busiestDay ?? noData}
-        />
+      <div className="stats-tabs">
+        <button
+          className={`stats-tab-btn${activeTab === 'statistics' ? ' active' : ''}`}
+          onClick={() => setActiveTab('statistics')}
+        >
+          Statistics
+        </button>
+        <button
+          className={`stats-tab-btn${activeTab === 'history' ? ' active' : ''}`}
+          onClick={() => setActiveTab('history')}
+        >
+          History
+        </button>
       </div>
+      {activeTab === 'statistics' && (
+        <div className="statistics-grid">
+          <StatCard
+            label="Average Daily Spend"
+            value={averageDailySpend === 0 ? noData : formatCurrency(averageDailySpend)}
+          />
+          <StatCard
+            label="Highest Expense"
+            value={highestExpense === null ? noData : (
+              <>
+                <span>{highestExpense.title}</span>
+                <span>{formatCurrency(highestExpense.amount)}</span>
+              </>
+            )}
+          />
+          <StatCard
+            label="Most Used Category"
+            value={mostUsedCategory ?? noData}
+          />
+          <StatCard
+            label="Most Expensive Category"
+            value={mostExpensiveCategory ?? noData}
+          />
+          <StatCard
+            label="Total Expenses"
+            value={totalExpenseCount === 0 ? noData : `${totalExpenseCount} expenses`}
+          />
+          <StatCard
+            label="Busiest Day"
+            value={busiestDay ?? noData}
+          />
+        </div>
+      )}
+      {activeTab === 'history' && <MonthComparison expenses={expenses} />}
     </div>
   )
 }
